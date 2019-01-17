@@ -1,15 +1,6 @@
-import pytest
-from click.testing import CliRunner
 
-from irisvmpy import iris
+def test_dummy():
+    print('testing within python')
+    assert 1 == 2/2
+    print('testing within python')
 
-
-class TestCLI(object):
-
-    @pytest.fixture()
-    def runner(self):
-        return CliRunner()
-
-    def test_print_help_succeeds(self, runner):
-        result = runner.invoke(iris.cli, ['--help'])
-        assert result.exit_code == 0
