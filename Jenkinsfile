@@ -28,7 +28,7 @@ pipeline {
             steps {
                 echo 'Testing'
                 sh '''
-                . $PYENV_HOME/bin/activate
+                # . $PYENV_HOME/bin/activate
                 echo "Sending pytest"
                 pytest
                 '''
