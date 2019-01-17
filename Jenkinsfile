@@ -28,6 +28,7 @@ pipeline {
             steps {
                 echo 'Testing'
                 sh '''
+                PYENV_HOME=$WORKSPACE/.jenkins_venv_ZERZE/
                 . $PYENV_HOME/bin/activate
                 echo "Sending pytest"
                 pytest
