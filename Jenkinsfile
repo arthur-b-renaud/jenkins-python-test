@@ -5,6 +5,13 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building'
+                cd /tmp/
+                rm -rf "/tmp/jenkins_pipenv"
+                mkdir /tmp/jenkins_pipenv
+                cd /tmp/jenkins_pipenv
+                pipenv --python 3.6
+                pipenv install requests
+                echo 'Ending Building'
             }
         }
         stage('Test') {
