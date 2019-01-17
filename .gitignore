@@ -101,3 +101,16 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# PERSO AR
+venv
+.idea
+*.py[cod]
+*/cache/*
+cache/
+.ipynb_checkpoints/
+.coverage
+*.xlsx#
+cache/*
+.eggs/*
+*.egg-info/*
