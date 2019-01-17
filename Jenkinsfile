@@ -16,6 +16,7 @@ pipeline {
                     fi
 
                     echo "$WORKSPACE/.jenkins_venv_ZERZE/"
+                    
 
                     virtualenv --no-site-packages $PYENV_HOME
                     . $PYENV_HOME/bin/activate
