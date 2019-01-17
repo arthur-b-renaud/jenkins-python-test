@@ -28,7 +28,7 @@ pipeline {
             steps {
                 echo 'Testing'
                 sh '''
-                # . $PYENV_HOME/bin/activate
+                . $PYENV_HOME/bin/activate
                 echo "Sending pytest"
                 pytest
                 '''
@@ -44,6 +44,7 @@ pipeline {
     post {
         always {
             echo 'This will always run'
+
         }
         success {
             echo 'This will run only if successful'

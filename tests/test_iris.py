@@ -3,6 +3,7 @@ from click.testing import CliRunner
 
 from irisvmpy import iris
 
+
 class TestCLI(object):
 
     @pytest.fixture()
