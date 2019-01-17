@@ -10,14 +10,16 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh '''echo 'Building'
-                cd /tmp/
-                rm -rf "/tmp/jenkins_pipenv"
-                mkdir /tmp/jenkins_pipenv
-                cd /tmp/jenkins_pipenv
-                pipenv --python 3.6
-                pipenv install requests
-                echo 'Ending Building'
+                sh '''PYENV_HOME=$WORKSPACE/.jenkins_venv_ZERZE/
+                    if [ -d $PYENV_HOME ]; then
+                       rm -rf $PYENV_HOME
+                    fi
+
+                    echo "$WORKSPACE/.jenkins_venv_ZERZE/"
+
+                    virtualenv --no-site-packages $PYENV_HOME
+                    . $PYENV_HOME/bin/activate
+                    pipenv install
                 '''
             }
         }
