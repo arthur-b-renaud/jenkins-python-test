@@ -16,22 +16,27 @@ pipeline {
                     fi
 
                     echo "$WORKSPACE/.jenkins_venv_ZERZE/"
-                    
 
-                    virtualenv --no-site-packages $PYENV_HOME
+                    python 3.6 -m virtualenv --no-site-packages $PYENV_HOME
                     . $PYENV_HOME/bin/activate
                     pipenv install
+
                 '''
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing'
+
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying'
+                sh '''
+                . $PYENV_HOME/bin/activate
+                pytest
+                '''
             }
         }
     }
