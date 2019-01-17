@@ -2,9 +2,15 @@ pipeline {
     agent any
 
     stages {
+        stage ("Code pull"){
+            steps{
+                checkout scm
+            }
+        }
+
         stage('Build') {
             steps {
-                echo 'Building'
+                sh '''echo 'Building'
                 cd /tmp/
                 rm -rf "/tmp/jenkins_pipenv"
                 mkdir /tmp/jenkins_pipenv
@@ -12,6 +18,7 @@ pipeline {
                 pipenv --python 3.6
                 pipenv install requests
                 echo 'Ending Building'
+                '''
             }
         }
         stage('Test') {
