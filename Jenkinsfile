@@ -23,7 +23,7 @@ pipeline {
                 if [-f $WORKSPACE/_venv]; then mkdir $WORKSPACE/_venv; fi
                 echo $WORKSPACE/_venv
                 export KEEPPATH=$PATH
-                PYEXEC = $WORKSPACE/_venv/bin/python3.6
+                PYEXEC=$WORKSPACE/_venv/bin/python3.6
 
                 export PATH=/usr/bin:$PATH
                 "/usr/bin/$PYINT" -c 'from virtualenv import create_environment;create_environment(\"_venv\", site_packages=True)'
