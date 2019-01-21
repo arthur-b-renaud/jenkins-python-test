@@ -31,15 +31,7 @@ pipeline {
                 if [ $? -ne 0 ]; then exit $?; fi
 
                 echo INSTALL
-                export PATH=$WORKSPACE/_venv/bin:$PATH
-                echo $PATH
-                if [ $? -ne 0 ]; then exit $?; fi
-                $PYEXEC -c 'from pip._internal import main;main(\"install -r requirements.txt\".split())'
-                if [ $? -ne 0 ]; then exit $?; fi
-                $PYEXEC --version
-                if [ $? -ne 0 ]; then exit $?; fi
-                $PYEXEC -c 'from pip._internal import main;main([\"freeze\"])'
-                if [ $? -ne 0 ]; then exit $?; fi
+                $PYEXEC -m pip install scuts
                 '''
             }
         }
