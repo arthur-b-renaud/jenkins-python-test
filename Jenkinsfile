@@ -25,7 +25,7 @@ pipeline {
                 export KEEPPATH=$PATH
 
                 export PATH=/usr/bin:$PATH
-                "/usr/bin/$PYINT" -c 'from virtualenv import create_environment;create_environment(\"$WORKSPACE/_venv\", site_packages=True)'
+                "/usr/bin/$PYINT" -c 'from virtualenv import create_environment;create_environment(\"_venv\", site_packages=True)'
                 export PATH=$KEEPPATH
                 if [ $? -ne 0 ]; then exit $?; fi
 
