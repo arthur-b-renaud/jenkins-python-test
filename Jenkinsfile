@@ -33,11 +33,11 @@ pipeline {
                 echo INSTALL
                 export PATH=$WORKSPACE/$NAME_JENKINS/_venv/bin:$PATH
                 if [ $? -ne 0 ]; then exit $?; fi
-                $PYINT -c "from pip._internal import main;main(\"install -r requirements.txt\".split())"
+                $PYINT -c 'from pip._internal import main;main(\"install -r requirements.txt\".split())'
                 if [ $? -ne 0 ]; then exit $?; fi
                 $PYINT --version
                 if [ $? -ne 0 ]; then exit $?; fi
-                $PYINT -c "from pip._internal import main;main([\"freeze\"])"
+                $PYINT -c 'from pip._internal import main;main([\"freeze\"])'
                 if [ $? -ne 0 ]; then exit $?; fi
                 '''
             }
