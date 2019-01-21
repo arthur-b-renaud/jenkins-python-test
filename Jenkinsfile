@@ -21,7 +21,9 @@ pipeline {
 
                 echo CREATE VIRTUAL ENVIRONMENT in $WORKSPACE/_venv
                 if [-f $WORKSPACE/_venv]; then mkdir $WORKSPACE/_venv; fi
+                echo $WORKSPACE/_venv
                 export KEEPPATH=$PATH
+
                 export PATH=/usr/bin:$PATH
                 "/usr/bin/$PYINT" -c 'from virtualenv import create_environment;create_environment(\"$WORKSPACE/_venv\", site_packages=True)'
                 export PATH=$KEEPPATH
