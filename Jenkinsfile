@@ -32,6 +32,7 @@ pipeline {
 
                 echo INSTALL
                 export PATH=$WORKSPACE/$NAME_JENKINS/_venv/bin:$PATH
+                echo $PATH
                 if [ $? -ne 0 ]; then exit $?; fi
                 $PYINT -c 'from pip._internal import main;main(\"install -r requirements.txt\".split())'
                 if [ $? -ne 0 ]; then exit $?; fi
