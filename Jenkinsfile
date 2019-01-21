@@ -41,7 +41,7 @@ pipeline {
                 sh '''
                 PYEXEC=$WORKSPACE/_venv/bin/python3.6
                 echo "Sending pytest"
-                PYEXEC -m pytest
+                $PYEXEC -m pytest
                 '''
                 echo 'End Testing'
             }
