@@ -19,11 +19,11 @@ pipeline {
 
                 echo AUTOMATEDSETUP
                 export current=$WORKSPACE/$NAME_JENKINS
-
+                echo current
                 echo interpreter=/usr/bin/$PYINT
 
                 echo CREATE VIRTUAL ENVIRONMENT in $WORKSPACE/$NAME_JENKINS/_venv
-                if [-f $WORKSPACE/$NAME_JENKINS/_venv]; then mkdir "$WORKSPACE/$NAME_JENKINS/_venv"; fi
+                if [-f $WORKSPACE/$NAME_JENKINS/_venv]; then mkdir $WORKSPACE/$NAME_JENKINS/_venv; fi
                 export KEEPPATH=$PATH
                 export PATH=/usr/bin:$PATH
                 "/usr/bin/$PYINT" -c 'from virtualenv import create_environment;create_environment(\"$WORKSPACE/$NAME_JENKINS/_venv\", site_packages=True)'
