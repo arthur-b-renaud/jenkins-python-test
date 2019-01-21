@@ -39,10 +39,9 @@ pipeline {
             steps {
                 echo 'Testing'
                 sh '''
-                PYENV_HOME=$WORKSPACE/.jenkins_venv_ZERZE/
-                . $PYENV_HOME/bin/activate
+                PYEXEC=$WORKSPACE/_venv/bin/python3.6
                 echo "Sending pytest"
-                pytest
+                PYEXEC -m pytest
                 '''
                 echo 'End Testing'
             }
