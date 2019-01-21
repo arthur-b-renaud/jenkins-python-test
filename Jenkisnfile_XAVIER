@@ -1,25 +1,24 @@
-export NAME_JENKINS=cpyquickhelper_UT_37_std
+export NAME_JENKINS=testjenkins
 export DIST=std
-export PYINT=python3.7
-export VERSION=3.7
+export PYINT=python3.6
+export VERSION=3.6
 export NAME=UT
 
 echo AUTOMATEDSETUP
-export current=/var/lib/jenkins/workspace/cpyquickhelper/$NAME_JENKINS
+export current=$WORKSPACE/$NAME_JENKINS
 
 echo interpreter=/usr/local/bin/$PYINT
 
-echo CREATE VIRTUAL ENVIRONMENT in /var/lib/jenkins/workspace/cpyquickhelper/$NAME_JENKINS/_venv
-if [-f /var/lib/jenkins/workspace/cpyquickhelper/$NAME_JENKINS/_venv]; then mkdir "/var/lib/jenkins/workspace/cpyquickhelper/$NAME_JENKINS/_venv"; fi
+echo CREATE VIRTUAL ENVIRONMENT in $WORKSPACE/$NAME_JENKINS/_venv
+if [-f $WORKSPACE/$NAME_JENKINS/_venv]; then mkdir "$WORKSPACE/$NAME_JENKINS/_venv"; fi
 export KEEPPATH=$PATH
 export PATH=/usr/local/bin:$PATH
-"/usr/local/bin/$PYINT" -c "from virtualenv import create_environment;create_environment(\"/var/lib/jenkins/workspace/cpyquickhelper/$NAME_JENKINS/_venv\", site_packages=True)"
+"/usr/local/bin/$PYINT" -c "from virtualenv import create_environment;create_environment(\"$WORKSPACE/$NAME_JENKINS/_venv\", site_packages=True)"
 export PATH=$KEEPPATH
 if [ $? -ne 0 ]; then exit $?; fi
 
 echo INSTALL
-export PATH=/var/lib/jenkins/workspace/cpyquickhelper/$NAME_JENKINS/_venv/bin:$PATH
-$PYINT -c "from pip._internal import main;main(\"install --no-cache-dir --no-deps --index http://localhost:8067/simple/ jyquickhelper pyquickhelper --extra-index-url=https://pypi.python.org/simple/\".split())"
+export PATH=$WORKSPACE/$NAME_JENKINS/_venv/bin:$PATH
 if [ $? -ne 0 ]; then exit $?; fi
 $PYINT -c "from pip._internal import main;main(\"install -r requirements.txt\".split())"
 if [ $? -ne 0 ]; then exit $?; fi
@@ -29,25 +28,25 @@ $PYINT -c "from pip._internal import main;main([\"freeze\"])"
 if [ $? -ne 0 ]; then exit $?; fi
 
 echo BEFORE_SCRIPT
-export PATH=/var/lib/jenkins/workspace/cpyquickhelper/$NAME_JENKINS/_venv/bin:$PATH
+export PATH=$WORKSPACE/$NAME_JENKINS/_venv/bin:$PATH
 $PYINT -u setup.py build_ext --inplace
 if [ $? -ne 0 ]; then exit $?; fi
 export JOB_NAME=UT
 
 echo SCRIPT
-export PATH=/var/lib/jenkins/workspace/cpyquickhelper/$NAME_JENKINS/_venv/bin:$PATH
+export PATH=$WORKSPACE/$NAME_JENKINS/_venv/bin:$PATH
 $PYINT -u setup.py unittests
 if [ $? -ne 0 ]; then exit $?; fi
 
 echo AFTER_SCRIPT
-export PATH=/var/lib/jenkins/workspace/cpyquickhelper/$NAME_JENKINS/_venv/bin:$PATH
+export PATH=$WORKSPACE/$NAME_JENKINS/_venv/bin:$PATH
 $PYINT -u setup.py bdist_wheel
 if [ $? -ne 0 ]; then exit $?; fi
-cp dist/*.whl /var/lib/jenkins/workspace/cpyquickhelper/../local_pypi/local_pypi_server
+cp dist/*.whl $WORKSPACE/../local_pypi/local_pypi_server
 if [ $? -ne 0 ]; then exit $?; fi
 
 echo DOCUMENTATION
-export PATH=/var/lib/jenkins/workspace/cpyquickhelper/$NAME_JENKINS/_venv/bin:$PATH
+export PATH=$WORKSPACE/$NAME_JENKINS/_venv/bin:$PATH
 $PYINT -u setup.py build_sphinx
 if [ $? -ne 0 ]; then exit $?; fi
 cp -R -f _doc/sphinxdoc/build/html dist/html

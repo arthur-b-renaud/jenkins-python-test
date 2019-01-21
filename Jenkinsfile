@@ -10,17 +10,35 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh '''PYENV_HOME=$WORKSPACE/.jenkins_venv_ZERZE/
-                    if [ -d $PYENV_HOME ]; then
-                       rm -rf $PYENV_HOME
-                    fi
+                sh'''
+                export NAME_JENKINS=testjenkins
+                export DIST=std
+                export PYINT=python3.6
+                export VERSION=3.6
+                export NAME=UT
 
-                    echo "$WORKSPACE/.jenkins_venv_ZERZE/"
+                echo AUTOMATEDSETUP
+                export current=$WORKSPACE/$NAME_JENKINS
 
-                    python3.6 -m virtualenv --no-site-packages $PYENV_HOME
-                    . $PYENV_HOME/bin/activate
-                    pipenv install
+                echo interpreter=/usr/local/bin/$PYINT
 
+                echo CREATE VIRTUAL ENVIRONMENT in $WORKSPACE/$NAME_JENKINS/_venv
+                if [-f $WORKSPACE/$NAME_JENKINS/_venv]; then mkdir "$WORKSPACE/$NAME_JENKINS/_venv"; fi
+                export KEEPPATH=$PATH
+                export PATH=/usr/local/bin:$PATH
+                "/usr/local/bin/$PYINT" -c "from virtualenv import create_environment;create_environment(\"$WORKSPACE/$NAME_JENKINS/_venv\", site_packages=True)"
+                export PATH=$KEEPPATH
+                if [ $? -ne 0 ]; then exit $?; fi
+
+                echo INSTALL
+                export PATH=$WORKSPACE/$NAME_JENKINS/_venv/bin:$PATH
+                if [ $? -ne 0 ]; then exit $?; fi
+                $PYINT -c "from pip._internal import main;main(\"install -r requirements.txt\".split())"
+                if [ $? -ne 0 ]; then exit $?; fi
+                $PYINT --version
+                if [ $? -ne 0 ]; then exit $?; fi
+                $PYINT -c "from pip._internal import main;main([\"freeze\"])"
+                if [ $? -ne 0 ]; then exit $?; fi
                 '''
             }
         }
