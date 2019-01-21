@@ -11,19 +11,16 @@ pipeline {
         stage('Build') {
             steps {
                 sh'''
-                export NAME_JENKINS=testjenkins
                 export DIST=std
                 export PYINT=python3.6
                 export VERSION=3.6
                 export NAME=UT
 
                 echo AUTOMATEDSETUP
-                export current=$WORKSPACE/$NAME_JENKINS
-                echo current
                 echo interpreter=/usr/bin/$PYINT
 
                 echo CREATE VIRTUAL ENVIRONMENT in $WORKSPACE/_venv
-                if [-f $WORKSPACE/$NAME_JENKINS/_venv]; then mkdir $WORKSPACE/_venv; fi
+                if [-f $WORKSPACE/_venv]; then mkdir $WORKSPACE/_venv; fi
                 export KEEPPATH=$PATH
                 export PATH=/usr/bin:$PATH
                 "/usr/bin/$PYINT" -c 'from virtualenv import create_environment;create_environment(\"$WORKSPACE/_venv\", site_packages=True)'
