@@ -25,6 +25,7 @@ pipeline {
                 export PATH=$KEEPPATH
 
                 $PYEXEC -m pip install scuts
+                $PYEXEC -m pip install pipenv
                 $PYEXEC -m pipenv install
                 '''
             }
