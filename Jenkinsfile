@@ -11,13 +11,8 @@ pipeline {
         stage('Build') {
             steps {
                 sh'''
-                export DIST=std
                 export PYINT=python3.6
                 export VERSION=3.6
-                export NAME=UT
-
-                echo AUTOMATEDSETUP
-                echo interpreter=/usr/bin/$PYINT
 
                 echo CREATE VIRTUAL ENVIRONMENT in $WORKSPACE/_venv
                 if [-f $WORKSPACE/_venv]; then mkdir $WORKSPACE/_venv; fi
@@ -28,10 +23,9 @@ pipeline {
                 export PATH=/usr/bin:$PATH
                 "/usr/bin/$PYINT" -c 'from virtualenv import create_environment;create_environment(\"_venv\", site_packages=True)'
                 export PATH=$KEEPPATH
-                if [ $? -ne 0 ]; then exit $?; fi
 
-                echo INSTALL
                 $PYEXEC -m pip install scuts
+                $PYEXEC -m pipenv install
                 '''
             }
         }
