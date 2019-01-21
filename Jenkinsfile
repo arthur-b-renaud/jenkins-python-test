@@ -23,6 +23,7 @@ pipeline {
                 if [-f $WORKSPACE/_venv]; then mkdir $WORKSPACE/_venv; fi
                 echo $WORKSPACE/_venv
                 export KEEPPATH=$PATH
+                PYEXEC = $WORKSPACE/_venv/bin/python3.6
 
                 export PATH=/usr/bin:$PATH
                 "/usr/bin/$PYINT" -c 'from virtualenv import create_environment;create_environment(\"_venv\", site_packages=True)'
@@ -33,11 +34,11 @@ pipeline {
                 export PATH=$WORKSPACE/_venv/bin:$PATH
                 echo $PATH
                 if [ $? -ne 0 ]; then exit $?; fi
-                $PYINT -c 'from pip._internal import main;main(\"install -r requirements.txt\".split())'
+                $PYEXEC -c 'from pip._internal import main;main(\"install -r requirements.txt\".split())'
                 if [ $? -ne 0 ]; then exit $?; fi
-                $PYINT --version
+                $PYEXEC --version
                 if [ $? -ne 0 ]; then exit $?; fi
-                $PYINT -c 'from pip._internal import main;main([\"freeze\"])'
+                $PYEXEC -c 'from pip._internal import main;main([\"freeze\"])'
                 if [ $? -ne 0 ]; then exit $?; fi
                 '''
             }
