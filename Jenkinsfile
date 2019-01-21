@@ -12,7 +12,7 @@ pipeline {
             steps {
                 sh'''
                 export PYINT=python3.6
-                export VERSION=3.6
+                export PYVERSION=3.6
 
                 echo CREATE VIRTUAL ENVIRONMENT in $WORKSPACE/_venv
                 if [-f $WORKSPACE/_venv]; then mkdir $WORKSPACE/_venv; fi
@@ -24,9 +24,11 @@ pipeline {
                 "/usr/bin/$PYINT" -c 'from virtualenv import create_environment;create_environment(\"_venv\", site_packages=True)'
                 export PATH=$KEEPPATH
 
-                $PYEXEC -m pip install scuts
                 $PYEXEC -m pip install pipenv
-                $PYEXEC -m pipenv install
+                $PYEXEC -m pipenv --python $PYVERSION
+                $PYPIPENVEXEC = $PYEXEC -m pipenv --where
+                $PYPIPENVEXEC -m pip install pipenv
+                $PYPIPENVEXEC -m pipenv install
                 '''
             }
         }
@@ -34,9 +36,9 @@ pipeline {
             steps {
                 echo 'Testing'
                 sh '''
-                PYEXEC=$WORKSPACE/_venv/bin/python3.6
+                $PYPIPENVEXEC = $PYEXEC -m pipenv --where
                 echo "Sending pytest"
-                $PYEXEC -m pytest
+                $PYPIPENVEXEC -m pytest
                 '''
                 echo 'End Testing'
             }
