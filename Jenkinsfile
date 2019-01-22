@@ -36,6 +36,8 @@ pipeline {
             steps {
                 echo 'Testing'
                 sh '''
+                PYPIPENVEXEC="$($PYEXEC -m pipenv --venv)"
+                echo $PYPIPENVEXEC
                 $PYPIPENVEXEC = $PYEXEC -m pipenv --where
                 echo "Sending pytest"
                 $PYPIPENVEXEC -m pytest
