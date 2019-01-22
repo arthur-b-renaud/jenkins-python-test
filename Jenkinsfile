@@ -23,10 +23,10 @@ pipeline {
                 export PATH=/usr/bin:$PATH
                 "/usr/bin/$PYINT" -c 'from virtualenv import create_environment;create_environment(\"_venv\", site_packages=True)'
                 export PATH=$KEEPPATH
-
+                export PIPENV_VENV_IN_PROJECT=$WORKSPACE/_venv
                 $PYEXEC -m pip install pipenv
                 $PYEXEC -m pipenv --python $PYVERSION
-                $PYEXEC -m pipenv install
+                $PYEXEC -m pipenv install --skip-lock
                 $PYPIPENVEXEC = $PYEXEC -m pipenv --venv
                 '''
             }
