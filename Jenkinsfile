@@ -27,7 +27,7 @@ pipeline {
                 $PYEXEC -m pip install pipenv
                 $PYEXEC -m pipenv --python $PYVERSION
                 $PYEXEC -m pipenv install --skip-lock
-                PYPIPENVEXEC="$($PYEXEC -m pipenv --venv)"
+                PYPIPENVEXEC="$($PYEXEC -m pipenv --venv)/bin/python$PYVERSION"
                 echo $PYPIPENVEXEC
                 '''
             }
@@ -36,9 +36,8 @@ pipeline {
             steps {
                 echo 'Testing'
                 sh '''
-                PYPIPENVEXEC="$($PYEXEC -m pipenv --venv)"
+                PYPIPENVEXEC="$($PYEXEC -m pipenv --venv)/bin/python$PYVERSION"
                 echo $PYPIPENVEXEC
-                $PYPIPENVEXEC = $PYEXEC -m pipenv --where
                 echo "Sending pytest"
                 $PYPIPENVEXEC -m pytest
                 '''
