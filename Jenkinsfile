@@ -27,7 +27,8 @@ pipeline {
                 $PYEXEC -m pip install pipenv
                 $PYEXEC -m pipenv --python $PYVERSION
                 $PYEXEC -m pipenv install --skip-lock
-                $PYPIPENVEXEC = $PYEXEC -m pipenv --venv
+                PYPIPENVEXEC="$($PYEXEC -m pipenv --venv)"
+                echo $PYPIPENVEXEC
                 '''
             }
         }
