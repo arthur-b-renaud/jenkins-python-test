@@ -24,10 +24,10 @@ pipeline {
                 "/usr/bin/$PYINT" -c 'from virtualenv import create_environment;create_environment(\"_venv\", site_packages=True)'
                 export PATH=$KEEPPATH
                 export PIPENV_VENV_IN_PROJECT=$WORKSPACE/_venv
-                $PYEXEC -m pip install pipenv
-                $PYEXEC -m pipenv --python $PYVERSION
-                $PYEXEC -m pipenv install --skip-lock
-                PYPIPENVEXEC="$($PYEXEC -m pipenv --venv)/bin/python$PYVERSION"
+                $PYINT -m pip install pipenv
+                $PYINT -m pipenv --python $PYVERSION
+                $PYINT -m pipenv install --skip-lock
+                PYPIPENVEXEC="$($PYINT -m pipenv --venv)/bin/python$PYVERSION"
                 echo $PYPIPENVEXEC
                 '''
             }
@@ -38,7 +38,7 @@ pipeline {
                 sh '''
                 export PYVERSION=3.6
                 PYEXEC=$WORKSPACE/_venv/bin/python3.6
-                PYPIPENVEXEC="$($PYEXEC -m pipenv --venv)/bin/python$PYVERSION"
+                PYPIPENVEXEC="$($PYINT -m pipenv --venv)/bin/python$PYVERSION"
                 echo $PYPIPENVEXEC
                 echo "Sending pytest"
                 $PYPIPENVEXEC -m pytest
