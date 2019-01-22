@@ -26,9 +26,8 @@ pipeline {
 
                 $PYEXEC -m pip install pipenv
                 $PYEXEC -m pipenv --python $PYVERSION
-                $PYPIPENVEXEC = $PYEXEC -m pipenv --where
-                $PYPIPENVEXEC -m pip install pipenv
-                $PYPIPENVEXEC -m pipenv install
+                $PYEXEC -m pipenv install
+                $PYPIPENVEXEC = $PYEXEC -m pipenv --venv
                 '''
             }
         }
