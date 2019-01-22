@@ -36,6 +36,7 @@ pipeline {
             steps {
                 echo 'Testing'
                 sh '''
+                export PYINT=python3.6
                 export PYVERSION=3.6
                 PYEXEC=$WORKSPACE/_venv/bin/python3.6
                 export PIPENV_VENV_IN_PROJECT=$WORKSPACE/_venv
