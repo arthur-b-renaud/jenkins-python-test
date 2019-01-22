@@ -36,6 +36,8 @@ pipeline {
             steps {
                 echo 'Testing'
                 sh '''
+                export PYVERSION=3.6
+                PYEXEC=$WORKSPACE/_venv/bin/python3.6
                 PYPIPENVEXEC="$($PYEXEC -m pipenv --venv)/bin/python$PYVERSION"
                 echo $PYPIPENVEXEC
                 echo "Sending pytest"
